@@ -1,0 +1,2 @@
+-- Haskell Playground 1.0
+optimizeModel (\(a,b) x -> a*x + b) [(1,1), (2,2), (3,3)] [10, 1000]

@@ -1,0 +1,11 @@
+-- Haskell Playground 1.0
+{-# LANGUAGE ViewPatterns #-}
+
+env <- chartEnv
+
+--renderChart env $ optimizeAndChart (\(a,b) x -> a*x + b) [(0, 0), (5,10)] [1,2]
+
+
+colourConvert
+
+renderChart env plotModels
