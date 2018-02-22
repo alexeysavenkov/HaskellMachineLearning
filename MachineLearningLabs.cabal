@@ -10,20 +10,27 @@ data-files:
 x-ghc-framework-version: 8.0.2-8.9-3
 x-last-ide-version: HfM1.5.1
 Executable MachineLearningLabs
-  main-is: LAB01Regressions.hs
+  main-is: Regressions.hs
   buildable: True
   build-depends:
       diagrams-rasterific -any,
+      smoothie -any,
       SVGFonts -any,
-      Chart-diagrams -any,
       vector -any,
-      base -any,
-      levmar -any,
       diagrams-lib -any,
+      vector-space -any,
       JuicyPixels -any,
+      containers -any,
+      Chart-diagrams -any,
+      base -any,
+      cubicspline -any,
+      levmar -any,
       Chart -any
   default-language: Haskell2010
   other-modules:
-      LevmarOptimizer
+      SplineApproximation
       EnergyCostDataset
       ChartUtils
+      LevmarOptimizer
+      Bezier
+      Loss

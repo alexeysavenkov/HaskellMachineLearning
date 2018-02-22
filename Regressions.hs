@@ -8,6 +8,7 @@ import EnergyCostDataset
 import Graphics.Rendering.Chart.Easy
 import Graphics.Rendering.Chart.Backend.Diagrams
 import Graphics.Rendering.Chart.Backend.Types
+import Loss
 
 optimizeAndChart f trainingData initialParams =
   let 
@@ -39,24 +40,18 @@ plotModels =
     (cubicModel, _, _) = optimizeModel cubic energyCostTrainingSet [0,0,0,0]
     (asympModel, _, _) = optimizeModel asymptotic energyCostTrainingSet [0,0,0]
     (logisticModel, _, _) = optimizeModel logisticPopulation energyCostTrainingSet [0,0,0]
-
-    formattedPlot model label =
-      let
-        trainingLoss = round $ loss model energyCostTrainingSet
-        totalLoss = round $ loss model energyDataset
-        formattedLabel = label ++ " (" ++ (show trainingLoss) ++ "|" ++ (show totalLoss) ++ ")"
-      in plotFunction model formattedLabel [0,(0.005)..5]
       
    in do
+    layout_title .= "Regressions"
     layout_y_axis . laxis_generate .= scaledAxis def (0, 150)
     layout_x_axis . laxis_generate .= scaledAxis def (0, 5)
     setColors (map opaque [red, green, blue, yellow, cyan, violet, purple])
     setShapes [PointShapeCircle, PointShapeCircle, PointShapeCircle]
-    formattedPlot linearModel "Linear"
-    formattedPlot quadraticModel "Quadratic"   
-    formattedPlot asympModel "Asymptotic"
-    formattedPlot logisticModel "Logistic"
-    formattedPlot cubicModel "Cubic"
+    formattedPlot linearModel "Linear" [0,(0.005)..5]
+    formattedPlot quadraticModel "Quadratic" [0,(0.005)..5] 
+    formattedPlot asympModel "Asymptotic" [0,(0.005)..5]
+    formattedPlot logisticModel "Logistic" [0,(0.005)..5]
+    formattedPlot cubicModel "Cubic" [0,(0.005)..5]
     plot (customPoints "Training set" energyCostTrainingSet 5) 
     plot (customPoints "Test set" energyCostTestSet 5)
     

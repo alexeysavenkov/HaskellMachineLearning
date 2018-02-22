@@ -1,0 +1,16 @@
+-- Haskell Playground 1.0
+env <- chartEnv
+
+bezierSpline 1
+bezierSpline 1.2
+
+round $ loss bezierSpline energyDataset
+
+renderChart env linearSplinePlot
+--cubicBezier
+--cubicSplineCoeffs
+-- trainQuadraticSpline energyCostTrainingSet
+
+--length $ energyCostTrainingSet
+
+--bezierSpline 1.1

@@ -17,6 +17,9 @@ import Codec.Picture
 
 import Control.Monad (when)
 
+import Loss
+import EnergyCostDataset
+
 -- Support code
 -- --  
 
@@ -38,11 +41,12 @@ chartEnv
             = case (_font_name fs, _font_slant fs, _font_weight fs) of
                 ("sans-serif", FontSlantNormal , FontWeightNormal) -> sansR
                 ("sans-serif", FontSlantNormal , FontWeightBold  ) -> sansRB
-      return $ createEnv vectorAlignmentFns 640 640 fontSelect
+      return $ createEnv vectorAlignmentFns 800 800 fontSelect
       
 fSamples :: (Double -> Double) -> [Double] -> [(Double, Double)]
 fSamples f xs 
-  = [ (x, f x) 
+  = filter ((< 150) . snd) $
+    [ (x, f x) 
     | x <- xs ]
     
 -- | Construct a scatter plot with the given title and data, using the
@@ -66,3 +70,9 @@ amplitudeModulation
       plotFunction (\x -> x*x*x) "kek" [0,(0.5)..400]
       --plot (points "am points" (signal [0,7..400]))
       
+formattedPlot model label range =
+      let
+        trainingLoss = round $ loss model energyCostTrainingSet
+        totalLoss = round $ loss model energyDataset
+        formattedLabel = label ++ " (" ++ (show trainingLoss) ++ " train|" ++ (show totalLoss) ++ " total)"
+      in plotFunction model formattedLabel range 
